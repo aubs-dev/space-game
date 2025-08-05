@@ -19,11 +19,10 @@ CompileFlags:
     "-fdiagnostics-color=always",
     "-fansi-escape-codes",
     # Include directories
-    "-IC:/Dev/projects/c-cpp/3d-game/src",
+    "-IC:/Dev/projects/c-cpp/space-game/src",
     # Defines
     "-D_CRT_SECURE_NO_WARNINGS",
     "-DGEM_DEBUG",
-    # "-DGEM_USE_EXPERIMENTAL_RENDERER",
   ]
 
 # Common Diagnostics
