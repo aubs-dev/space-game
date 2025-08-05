@@ -1,0 +1,61 @@
+# Common flags
+CompileFlags:
+  Add: [
+    # Core
+    "-g",
+    "-O0",
+    "-Wall",
+    "-Wextra",
+    # Annoyances
+    "-Wconversion",
+    "-Wno-sign-conversion",
+    "-Wno-implicit-float-conversion",
+    "-Wno-unused-parameter",
+    "-Wno-unused-function",
+    "-Wno-missing-designated-field-initializers",
+    "-Wno-microsoft-goto",
+    # Diagnostic output
+    "-fdiagnostics-absolute-paths",
+    "-fdiagnostics-color=always",
+    "-fansi-escape-codes",
+    # Include directories
+    "-IC:/Dev/projects/c-cpp/3d-game/src",
+    # Defines
+    "-D_CRT_SECURE_NO_WARNINGS",
+    "-DGEM_DEBUG",
+    # "-DGEM_USE_EXPERIMENTAL_RENDERER",
+  ]
+
+# Common Diagnostics
+Diagnostics:
+  UnusedIncludes: None
+
+---
+# C specific
+If:
+  PathMatch: [.*\.c, .*\.h]
+CompileFlags:
+  Add: [
+    "-std=c11",
+    "-xc-header",
+    "-Wstrict-prototypes",
+    "-Wno-missing-braces",
+  ]
+  Compiler: clang
+
+---
+# C++ specific
+If:
+  PathExclude: [.*\.c, .*\.h]
+CompileFlags:
+  Add: [
+    "-std=c++20",
+  ]
+  Compiler: clang++
+#
+# ---
+# # Forge
+# If:
+#   PathMatch: src/forge/.*
+# CompileFlags:
+#   CompilationDatabase: build/forge
