@@ -33,3 +33,11 @@
 
 #include "vendor/glad/gl.h"
 #include "vendor/glad/wgl.h"
+
+// -------------------------------------------
+// GEM
+// -------------------------------------------
+
+#include "GEM/base/keycodes.hpp"
+#include "GEM/base/macros.hpp"
+#include "GEM/base/types.hpp"
