@@ -116,7 +116,7 @@ struct Asset {
 
     // Optional
     struct {
-        shape::Rectangle rect;
+        geometry::Rectangle rect;
     } data;
 };
 
@@ -852,7 +852,7 @@ bool forge_write_asset_file(AssetType assetType, const Bundle* bundles) {
         using enum AssetType;
         case SPRITE:
             {
-                file::write_line(&headerFile, "    shape::Rectangle atlasRect;");
+                file::write_line(&headerFile, "    geometry::Rectangle atlasRect;");
             }
             break;
         case TILEMAP:
@@ -861,7 +861,7 @@ bool forge_write_asset_file(AssetType assetType, const Bundle* bundles) {
         case FONT:
             {
                 file::write_line(&headerFile, "    const char* filePath;");
-                file::write_line(&headerFile, "    shape::Rectangle atlasRect;");
+                file::write_line(&headerFile, "    geometry::Rectangle atlasRect;");
                 file::write_line(&headerFile, "    // Runtime");
                 file::write_line(&headerFile, "    u16 lineHeight;");
                 file::write_line(&headerFile, "    u16 baseLine;");
@@ -983,7 +983,7 @@ skip_asset_structure:
         }
 
         if (assetType == AssetType::SPRITE || assetType == AssetType::FONT) {
-            const shape::Rectangle* rect = (assetType == AssetType::SPRITE) ? &asset->data.rect : &auxiliaryAsset->data.rect;
+            const geometry::Rectangle* rect = (assetType == AssetType::SPRITE) ? &asset->data.rect : &auxiliaryAsset->data.rect;
 
             strcat(tempStr, " .atlasRect = { ");
             sprintf(numBuf, "%i, ", rect->x);
