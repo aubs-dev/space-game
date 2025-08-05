@@ -16,13 +16,7 @@ namespace asset {
     };
 
     enum ShaderName {
-        SHD_DEFAULT_LINE = 0,
-        SHD_DEFAULT_TRIANGLE,
-        SHD_DEFAULT_SPRITE,
-        SHD_DEFAULT_BILLBOARD,
-        SHD_DEFAULT_TILE,
-        SHD_DEFAULT_GLYPH,
-        SHD_DEFAULT_PARTICLE,
+        // SHD_DEFAULT_LINE = 0,
         ASSET_SHADER_COUNT,
     };
 
@@ -45,7 +39,7 @@ namespace asset {
 
     enum AnimationName {
         ANI_NONE = -1,
-        ANI_TEST = 0,
+        // ANI_TEST = 0,
         ASSET_ANIMATION_COUNT,
     };
 
