@@ -1,6 +1,6 @@
 #include "pch.hpp"
 
-#include "GEM/assets_manual.hpp"
+#include "GEM/assets.hpp"
 
 namespace asset {
     // -------------------------------------------

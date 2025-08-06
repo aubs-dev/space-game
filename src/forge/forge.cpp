@@ -1,4 +1,10 @@
 // -------------------------------------------
+// To Do
+// -------------------------------------------
+// - When rebuilding a specific asset type, assets.hpp/cpp will ONLY contain code for its type erasing all others.
+// | SOLUTION: Separate each asset type into it's own file. Include all existing asset files into asset.hpp
+
+// -------------------------------------------
 // Includes
 // -------------------------------------------
 
@@ -177,7 +183,7 @@ AssetConfig gAssetConfigs[as_index(AssetType::COUNT)] = {
         .atlas = {
             .type = AtlasType::GRID,
             .gridSize = 16,
-            .activeLength = 1,
+            .activeLength = 2,
             .orientation = AtlasOrientation::HORIZONTAL,
         },
     },
@@ -1150,7 +1156,7 @@ void forge_combine_asset_files() {
     log_format(ANSI_CYAN "[FORGE] " ANSI_RESET "Combining asset files!");
 
     // -- File Headers
-    const char* headerPath = CONFIG_GEN_PATH "/assets.hpp";
+    const char* headerPath = CONFIG_GEN_PATH "/assets_generated.hpp";
     file::File headerFile = file::open(headerPath, file::Mode::WRITE);
 
     forge_write_generated_header(&headerFile);
@@ -1163,11 +1169,11 @@ void forge_combine_asset_files() {
     file::write_line(&headerFile, "");
     file::write_line(&headerFile, "namespace asset {");
 
-    const char* sourcePath = CONFIG_GEN_PATH "/assets.cpp";
+    const char* sourcePath = CONFIG_GEN_PATH "/assets_generated.cpp";
     file::File sourceFile = file::open(sourcePath, file::Mode::WRITE);
 
     forge_write_generated_header(&sourceFile);
-    file::write_line(&sourceFile, "#include \"GEM/assets.hpp\"");
+    file::write_line(&sourceFile, "#include \"GEM/assets_generated.hpp\"");
     file::write_line(&sourceFile, "");
     file::write_line(&sourceFile, "namespace asset {");
 

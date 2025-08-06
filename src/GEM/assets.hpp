@@ -2,7 +2,7 @@
 
 #include "pch.hpp"
 
-#include "GEM/assets.hpp"
+#include "GEM/assets_generated.hpp"
 
 namespace asset {
     // -------------------------------------------

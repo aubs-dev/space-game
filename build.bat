@@ -23,8 +23,8 @@ if "%1"=="clean" (
     echo Removing generated files...
     if exist src\GEM (
         pushd src\GEM
-        if exist assets.cpp del assets.cpp
-        if exist assets.hpp del assets.hpp
+        if exist assets_generated.cpp del assets_generated.cpp
+        if exist assets_generated.hpp del assets_generated.hpp
         popd
     )
 
