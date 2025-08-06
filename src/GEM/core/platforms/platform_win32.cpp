@@ -204,7 +204,6 @@ namespace window {
     // Lifetime
     // -------------------------------------------
 
-#ifndef GEM_USE_EXPERIMENTAL_RENDERER
     static bool dummy_get_wgl_functions() {
         i32 success = 0;
 
@@ -310,7 +309,6 @@ namespace window {
 
         return true;
     };
-#endif // GEM_USE_EXPERIMENTAL_RENDERER
 
     GAPI bool create(const char* title, u32 width, u32 height, u32 flags) {
         assert(!platform::g_State.windowCtx.handle && "Window already exists!");
@@ -324,10 +322,8 @@ namespace window {
         EnumDisplayMonitors(NULL, NULL, DisplayEnumProc, (LPARAM)(&platform::g_State.display.ctx));
         const platform::Display* primaryDisplay = platform::display_get_primary();
 
-#ifndef GEM_USE_EXPERIMENTAL_RENDERER
         // Create a dummy window and pull all WGL functions
         if (!dummy_get_wgl_functions()) return false;
-#endif
 
         // Create the window
         const HINSTANCE instance = GetModuleHandleA(NULL);
@@ -377,14 +373,7 @@ namespace window {
         platform::g_State.windowCtx.baseStyle = baseStyle;
 
         // -- Set the extended style
-#ifdef GEM_USE_EXPERIMENTAL_RENDERER
-        // NOTE: The WS_EX_NOREDIRECTIONBITMAP flag here is needed to fix an ugly bug with Windows 10
-        // when the window is resized and DXGI's swapchain uses the FLIP presentation model.
-        // source: https://stackoverflow.com/q/63096226 and here: https://stackoverflow.com/q/53000291
-        u32 extendedStyle = WS_EX_NOREDIRECTIONBITMAP;
-#else
         u32 extendedStyle = 0;
-#endif
         if (check_flag(Flags::FULLSCREEN) || check_flag(Flags::ALWAYS_ON_TOP)) FLAG_ADD(extendedStyle, WS_EX_TOPMOST);
 
         // -- Set the window size & position, taking its decorations into account
@@ -426,7 +415,6 @@ namespace window {
             return false;
         }
 
-#ifndef GEM_USE_EXPERIMENTAL_RENDERER
         // Configure and initialize the OpenGL context
         platform::g_State.windowCtx.deviceCtx = GetDC(platform::g_State.windowCtx.handle);
         if (!platform::g_State.windowCtx.deviceCtx) {
@@ -552,7 +540,6 @@ namespace window {
         // Show and update the main window
         ShowWindow(platform::g_State.windowCtx.handle, SW_SHOWNORMAL);
         UpdateWindow(platform::g_State.windowCtx.handle);
-#endif // GEM_USE_EXPERIMENTAL_RENDERER
 
         log_info("Platform: Window created | \"%s\" @ %ix%i%s", title, width, height, check_flag(Flags::FULLSCREEN) ? " Fullscreen" : "");
 
@@ -597,7 +584,6 @@ namespace window {
     }
 
     GAPI void shutdown() {
-#ifndef GEM_USE_EXPERIMENTAL_RENDERER
         wglMakeCurrent(NULL, NULL);
 
         wglDeleteContext(platform::g_State.windowCtx.glCtx);
@@ -605,7 +591,7 @@ namespace window {
 
         ReleaseDC(platform::g_State.windowCtx.handle, platform::g_State.windowCtx.deviceCtx);
         platform::g_State.windowCtx.deviceCtx = NULL;
-#endif
+
         DestroyWindow(platform::g_State.windowCtx.handle);
         platform::g_State.windowCtx.handle = NULL;
         log_info("Platform: Window destroyed | \"%s\"", platform::g_State.windowCtx.title);
@@ -615,11 +601,9 @@ namespace window {
     // State
     // -------------------------------------------
 
-#ifndef GEM_USE_EXPERIMENTAL_RENDERER
     GAPI void swap_buffers() {
         SwapBuffers(platform::g_State.windowCtx.deviceCtx);
     }
-#endif
 
     GAPI const char* get_title() {
         return platform::g_State.windowCtx.title;

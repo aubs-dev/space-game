@@ -34,9 +34,7 @@ namespace window {
         MINIMIZED     = 1 << 3, // Minimize the window on startup
         POS_CENTERED  = 1 << 4, // Center the window to the current display on startup
         ALWAYS_ON_TOP = 1 << 5, // Keep the window always on top
-#ifndef GEM_USE_EXPERIMENTAL_RENDERER
         VSYNC_HINT    = 1 << 6, // Enable V-Sync on the GPU
-#endif
     };
 
     struct Window {
@@ -45,10 +43,8 @@ namespace window {
         HWND handle;
         u32 baseStyle;
 
-#ifndef GEM_USE_EXPERIMENTAL_RENDERER
         HDC deviceCtx;
         HGLRC glCtx;
-#endif
 
         struct {
             Vec2i original;
@@ -78,9 +74,7 @@ namespace window {
     GAPI void shutdown();
 
     // -- State
-#ifndef GEM_USE_EXPERIMENTAL_RENDERER
     GAPI void swap_buffers();
-#endif
 
     GAPI const char* get_title();
     GAPI void set_title(const char* title);
