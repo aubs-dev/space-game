@@ -2,7 +2,20 @@
 
 #include "pch.hpp"
 
+#include "GEM/math/vector.hpp"
+
 namespace geometry {
+    // -------------------------------------------
+    // Component
+    // -------------------------------------------
+
+    struct Transform {
+        Vec3f position;
+        f32   rotation;
+        Vec2f scale;
+        Vec2f origin;
+    };
+
     // -------------------------------------------
     // Shapes
     // -------------------------------------------
