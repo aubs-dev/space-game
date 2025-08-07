@@ -360,12 +360,8 @@ namespace window {
         }
 
         if (check_flag(Flags::RESIZABLE)) {
-            if (check_flag(Flags::FULLSCREEN)) {
-                log_warn("Platform: Resizable mode isn't supported when 'fullscreen' is enabled!");
-            } else {
-                FLAG_ADD(baseStyle, WS_THICKFRAME);
-                FLAG_ADD(baseStyle, WS_MAXIMIZEBOX);
-            }
+            FLAG_ADD(baseStyle, WS_THICKFRAME);
+            FLAG_ADD(baseStyle, WS_MAXIMIZEBOX);
         }
 
         if (check_flag(Flags::MINIMIZED)) FLAG_ADD(baseStyle, WS_MINIMIZE);
@@ -716,6 +712,10 @@ namespace window {
             FLAG_ADD(updatedStyle, WS_CAPTION);
             FLAG_ADD(updatedStyle, WS_SYSMENU);
             FLAG_ADD(updatedStyle, WS_MINIMIZEBOX);
+            if (check_flag(Flags::RESIZABLE)) {
+                FLAG_ADD(updatedStyle, WS_THICKFRAME);
+                FLAG_ADD(updatedStyle, WS_MAXIMIZEBOX);
+            }
 
             // Set style: windowed
             SetWindowLongA(platform::g_State.windowCtx.handle, GWL_STYLE, updatedStyle);
@@ -735,6 +735,10 @@ namespace window {
             FLAG_REMOVE(updatedStyle, WS_CAPTION);
             FLAG_REMOVE(updatedStyle, WS_SYSMENU);
             FLAG_REMOVE(updatedStyle, WS_MINIMIZEBOX);
+            if (check_flag(Flags::RESIZABLE)) {
+                FLAG_REMOVE(updatedStyle, WS_THICKFRAME);
+                FLAG_REMOVE(updatedStyle, WS_MAXIMIZEBOX);
+            }
             // Add style: fullscreen
             FLAG_ADD(updatedStyle, WS_POPUP);
 
