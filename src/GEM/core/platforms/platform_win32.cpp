@@ -12,7 +12,7 @@
 // -------------------------------------------
 
 // -- Display
-static BOOL CALLBACK DisplayEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData) {
+static BOOL CALLBACK display_enum_proc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData) {
     platform::DisplayEnumContext* ctx = (platform::DisplayEnumContext*)dwData;
     if (!ctx || ctx->count >= GEM_MAX_DISPLAYS) return FALSE;
 
@@ -319,7 +319,7 @@ namespace window {
         platform::g_State.windowCtx.flags = flags;
 
         // Index all available displays/monitors
-        EnumDisplayMonitors(NULL, NULL, DisplayEnumProc, (LPARAM)(&platform::g_State.display.ctx));
+        EnumDisplayMonitors(NULL, NULL, display_enum_proc, (LPARAM)(&platform::g_State.display.ctx));
         const platform::Display* primaryDisplay = platform::display_get_primary();
 
         // Create a dummy window and pull all WGL functions
